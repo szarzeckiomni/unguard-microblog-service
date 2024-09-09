@@ -1,0 +1,27 @@
+name: unguard-microblog-service
+
+on:
+ workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Docker image
+      working-directory: ./src/microblog-service
+      run: docker build . --file Dockerfile --tag ghcr.io/dynatrace-oss/unguard/unguard-microblog-service:0.9.3
+    - name: Scan Docker image 🐳
+      uses: snyk/actions/docker@master
+      continue-on-error: true
+      with:
+          image:  ghcr.io/dynatrace-oss/unguard/unguard-microblog-service:0.9.3
+          args: --file=src/ad-service/Dockerfile --severity-threshold=high --target-name==customName --org=0462c6e9-7f83-4bf2-b83e-3edfdcd4a9f7  --project-tags=component=pkg:github/szarzeckiomni/unguard-microblog-service@main
+          command: monitor
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK }}
+#--sarif-file-output=snyk.sarif
+#    - name: Upload Snyk report as sarif 📦
+#      uses: github/codeql-action/upload-sarif@v2
+#      with:
+#         sarif_file: snyk.sarif
