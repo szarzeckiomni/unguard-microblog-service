@@ -9,7 +9,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      working-directory: ./src/microblog-service
+      working-directory: .
       run: docker build . --file Dockerfile --tag ghcr.io/dynatrace-oss/unguard/unguard-microblog-service:0.9.3
     - name: Scan Docker image 🐳
       uses: snyk/actions/docker@master
