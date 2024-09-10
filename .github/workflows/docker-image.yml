@@ -16,7 +16,7 @@ jobs:
       continue-on-error: true
       with:
           image:  ghcr.io/dynatrace-oss/unguard/unguard-microblog-service:0.9.3
-          args: --file=src/ad-service/Dockerfile --severity-threshold=high --target-name==customName --org=0462c6e9-7f83-4bf2-b83e-3edfdcd4a9f7  --project-tags=component=pkg:github/szarzeckiomni/unguard-microblog-service@main
+          args: --file=Dockerfile --severity-threshold=high --target-name==customName --org=0462c6e9-7f83-4bf2-b83e-3edfdcd4a9f7  --project-tags=component=pkg:github/szarzeckiomni/unguard-microblog-service@main
           command: monitor
       env:
         SNYK_TOKEN: ${{ secrets.SNYK }}
